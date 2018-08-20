@@ -1,0 +1,51 @@
+const upgrader3rdBase = {
+  run: function(creep) {
+    if (creep.memory.upgrading && creep.carry.energy === 0) {
+      creep.memory.upgrading = false;
+    }
+    if (!creep.memory.upgrading && creep.carry.energy === creep.carryCapacity) {
+      creep.memory.upgrading = true;
+    }
+
+    if (creep.memory.upgrading) {
+      // let controller = creep.room.controller;
+      let controller = Game.getObjectById('59f19f5282100e1594f34c3d');
+      if (controller) {
+        if (
+          creep.signController(
+            controller,
+            // 'I not, but curious that you and Bigred1 started here the same time with the same Symbol and running the same exact code'
+            'const u = n00b; if (u) {🏳️ || ☠️}'
+          ) == ERR_NOT_IN_RANGE
+        ) {
+          creep.moveTo(controller);
+        }
+        if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) {
+          creep.moveTo(controller, {
+            visualizePathStyle: { stroke: '#FF7F50' }
+          });
+        }
+      }
+    }
+    if (!creep.memory.upgrading) {
+      let sources = creep.room.find(FIND_SOURCES);
+      if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
+        // creep.say('Gathering');
+        creep.moveTo(sources[0], {
+          visualizePathStyle: { stroke: '#ffaa00' }
+        });
+      }
+    }
+  }
+};
+//    let upgradeSource = Game.rooms['W55N57'].lookForAt('structure', 46, 4)[0];
+//    if (creep.withdraw(upgradeSource, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+//      creep.moveTo(upgradeSource, {
+//      visualizePathStyle: { stroke: '#ffaa00' }
+//         });
+//       }
+//     }
+//   }
+// };
+
+module.exports = upgrader3rdBase;
